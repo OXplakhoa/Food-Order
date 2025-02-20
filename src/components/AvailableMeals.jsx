@@ -1,5 +1,5 @@
 import { useFetch } from "../hooks/useFetch";
-import { fetchAvailableMeals } from "../http";
+import { fetchAvailableMeals } from "../util/http";
 import Meals from "./Meals";
 export default function AvailableMeals() {
   const {
