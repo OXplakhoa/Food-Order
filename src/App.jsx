@@ -5,8 +5,8 @@ import { CartContextProvider } from "./store/CartContext";
 function App() {
   return (
     <CartContextProvider>
-      <Header/>
-      <AvailableMeals/>
+      <Header />
+      <AvailableMeals />
     </CartContextProvider>
   );
 }
