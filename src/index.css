@@ -249,6 +249,40 @@ h1 {
   background-color: rgba(0, 0, 0, 0.55);
 }
 
+.center {
+  text-align: center;
+}
+
+.loading-container {
+  margin: 0px auto;
+  position: relative;
+  width: 150px;
+  height: 150px;
+}
+
+.loading-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 4px solid transparent;
+  border-top: 4px solid #21e932;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
 @keyframes fade-slide-up {
   from {
     opacity: 0;
