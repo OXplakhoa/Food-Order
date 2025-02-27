@@ -2,6 +2,7 @@ import { useFetch } from "../hooks/useFetch";
 import { fetchAvailableMeals } from "../util/http";
 import Meals from "./Meals";
 import Logo from "../assets/logo.jpg";
+import Loading from "./UI/Loading";
 export default function AvailableMeals() {
   const {
     isLoading,
@@ -10,9 +11,7 @@ export default function AvailableMeals() {
   } = useFetch(fetchAvailableMeals, []);
   if (isLoading) {
     return (
-      <div className="loading-container">
-        <div className="loading-circle"></div>
-      </div>
+      <Loading/>
     );
   }
   return (
