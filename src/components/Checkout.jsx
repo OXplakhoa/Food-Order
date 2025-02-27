@@ -8,7 +8,7 @@ import UserProgressContext from "../store/UserProgressContext";
 
 export default function Checkout() {
   const cartCtx = useContext(CartContext);
-  
+
   const cartTotal = cartCtx.items.reduce(
     (totalPrice, item) => totalPrice + item.quantity * item.price,
     0
@@ -16,13 +16,35 @@ export default function Checkout() {
   const userProgressCtx = useContext(UserProgressContext);
   const handleCloseCheckout = () => {
     userProgressCtx.hideCheckout();
-  }
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const customerData = Object.fromEntries(fd.entries());
+
+    fetch("http://localhost:3000/orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        order: {
+          items: cartCtx.items,
+          customer: customerData,
+        },
+      }),
+    });
+    console.log("Submitted!")
+  };
   return (
-    <Modal open={userProgressCtx.progress === 'checkout'} onClose={handleCloseCheckout}>
-      <form>
+    <Modal
+      open={userProgressCtx.progress === "checkout"}
+      onClose={handleCloseCheckout}
+    >
+      <form onSubmit={handleSubmit}>
         <h2>Checkout</h2>
         <p>Total Amount: {currencyFormatter.format(cartTotal)}</p>
-        <Input label="Full Name" type="text" id="full-name" />
+        <Input label="Full Name" type="text" id="name" />
         <Input label="Email Address" type="email" id="email" />
         <Input label="Street" type="text" id="street" />
         <div className="control-row">
