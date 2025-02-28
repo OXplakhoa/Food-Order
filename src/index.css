@@ -253,6 +253,26 @@ h1 {
   text-align: center;
 }
 
+.error{
+  width: 90%;
+  margin: 2rem auto;
+  max-width: 25rem;
+  padding: 1rem;
+  background-color: #f9b8b8;
+  border-radius: 6px;
+}
+
+.error h2{
+  margin: 0;
+  color: #5a0606e3;
+  font-weight: bold;
+}
+
+.error p{
+  margin-bottom: 0;
+  color: #5a0606e3; 
+}
+
 .loading-container {
   margin: 0px auto;
   position: relative;

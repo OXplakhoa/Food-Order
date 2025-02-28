@@ -12,7 +12,7 @@ export function useFetch(fetchFunc, initValue) {
         const meals = await fetchFunc();
         setData(meals);
       } catch (error) {
-        setError({ message: error.message || "Failed to fetch" });
+        setError(error.message || "Failed to fetch");
       }
       setIsLoading(false);
     }
