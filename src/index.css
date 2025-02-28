@@ -292,6 +292,30 @@ h1 {
   animation: spin 1s linear infinite;
 }
 
+.success-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  width: 60px; 
+  height: 60px; 
+  background-color: #4CAF50; 
+  border-radius: 50%;
+  display: flex;
+  margin-left: 15em;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.tick {
+  width: 20px; 
+  height: 10px; 
+  border-left: 3px solid white; 
+  border-bottom: 3px solid white; 
+  transform: rotate(-45deg);
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
