@@ -302,6 +302,7 @@ h1 {
   background-color: #4CAF50; 
   border-radius: 50%;
   display: flex;
+  margin-top: 2em;
   margin-left: 15em;
   align-items: center;
   justify-content: center;

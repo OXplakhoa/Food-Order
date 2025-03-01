@@ -8,6 +8,7 @@ import UserProgressContext from "../store/UserProgressContext";
 import useHttp from "../hooks/useHttp";
 import Loading from "./UI/Loading";
 import Error from "./UI/Error";
+import { useActionState } from "react";
 
 const reqConfig = {
   method: "POST",
@@ -19,7 +20,7 @@ export default function Checkout() {
   const cartCtx = useContext(CartContext);
   const userProgressCtx = useContext(UserProgressContext);
 
-  const { data, isLoading, error, sendRequest, clearData } = useHttp(
+  const { data, error, sendRequest, clearData } = useHttp(
     "http://localhost:3000/orders",
     reqConfig
   );
@@ -36,11 +37,11 @@ export default function Checkout() {
     cartCtx.clearItem();
     clearData();
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const fd = new FormData(e.target);
+
+  async function checkoutAction(prevState, fd) {
     const customerData = Object.fromEntries(fd.entries());
-    sendRequest(
+
+    await sendRequest(
       JSON.stringify({
         order: {
           items: cartCtx.items,
@@ -48,19 +49,11 @@ export default function Checkout() {
         },
       })
     );
-    console.log("Submitted!");
-  };
-  let actions = (
-    <>
-      <Button onClick={handleCloseCheckout} type="button" textOnly>
-        Close
-      </Button>
-      <Button>Submit Order</Button>
-    </>
-  );
-  if (isLoading) {
-    actions = <Loading />;
   }
+  const [formState, formAction, isSending] = useActionState(
+    checkoutAction,
+    null
+  );
   if (data && !error) {
     return (
       <Modal
@@ -84,7 +77,7 @@ export default function Checkout() {
       open={userProgressCtx.progress === "checkout"}
       onClose={handleCloseCheckout}
     >
-      <form onSubmit={handleSubmit}>
+      <form action={formAction}>
         <h2>Checkout</h2>
         <p>Total Amount: {currencyFormatter.format(cartTotal)}</p>
         <Input label="Full Name" type="text" id="name" />
@@ -95,7 +88,18 @@ export default function Checkout() {
           <Input label="City" type="text" id="city" />
         </div>
         {error && <Error title="Failed to submit order" message={error} />}
-        <span className="modal-actions">{actions}</span>
+        <span className="modal-actions">
+          {isSending ? (
+            <Loading />
+          ) : (
+            <>
+              <Button onClick={handleCloseCheckout} type="button" textOnly>
+                Close
+              </Button>
+              <Button>Submit Order</Button>
+            </>
+          )}
+        </span>
       </form>
     </Modal>
   );
