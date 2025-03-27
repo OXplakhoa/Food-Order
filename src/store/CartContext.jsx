@@ -25,19 +25,23 @@ function cartReducer(state, action) {
         updatedItems.push({ ...action.item, quantity: 1 });
       }
       return { ...state, items: updatedItems };
-    case "REMOVE_ITEM":
-      const existingCartItem = state.items[existingCartItemIndex];
-      if (existingCartItem.quantity === 1) {
-        updatedItems.splice(existingCartItemIndex, 1);
-      } else {
-        const updatedItem = {
-          ...existingCartItem,
-          quantity: existingCartItem.quantity - 1,
-        };
-        updatedItems[existingCartItemIndex] = updatedItem;
-      }
+      case "REMOVE_ITEM":
+        const removeItemIndex = state.items.findIndex(
+          (item) => item.id === action.id
+        );
+        const removeItem = state.items[removeItemIndex];
+        const removeItemUpdatedItems = [...state.items];
+        if (removeItem.quantity === 1) {
+          removeItemUpdatedItems.splice(removeItemIndex, 1);
+        } else {
+          const updatedItem = {
+            ...removeItem,
+            quantity: removeItem.quantity - 1,
+          };
+          removeItemUpdatedItems[removeItemIndex] = updatedItem;
+        }
+        return { ...state, items: removeItemUpdatedItems };
 
-      return { ...state, items: updatedItems };
     case "CLEAR_ITEM":
       return { ...state, items: [] };
 
