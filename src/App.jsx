@@ -1,21 +1,20 @@
-import AvailableMeals from "./components/AvailableMeals";
-import Cart from "./components/Cart";
-import Checkout from "./components/Checkout";
-import Header from "./components/Header";
-import { CartContextProvider } from "./store/CartContext";
-import { UserProgressContextProvider } from "./store/UserProgressContext";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./route/Home";
+import AuthForm from "./components/auth/AuthForm";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/auth",
+    element: <AuthForm />,
+  },
+]);
 
 function App() {
-  return (
-    <UserProgressContextProvider>
-      <CartContextProvider>
-        <Header />
-        <AvailableMeals />
-        <Cart />
-        <Checkout />
-      </CartContextProvider>
-    </UserProgressContextProvider>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
