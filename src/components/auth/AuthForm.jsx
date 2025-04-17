@@ -1,10 +1,11 @@
 import React from "react";
 import "./AuthForm.css";
-import { Form, Link, useSearchParams } from "react-router-dom";
+import { Form, Link, useSearchParams, useActionData } from "react-router-dom";
 
 const AuthForm = () => {
   const [searchParams] = useSearchParams();
   const isLogin = searchParams.get("mode") === "login";
+  const data = useActionData(); // Lấy dữ liệu trả về từ action
 
   return (
     <div className={`container ${isLogin ? "" : "active"}`} id="container">
@@ -12,7 +13,7 @@ const AuthForm = () => {
         <Form method="post">
           <h1>Tạo tài khoản</h1>
           <span>Sử dụng gmail để đăng ký</span>
-          {/* <input type="text" name="username" placeholder="Tên tài khoản" required /> */}
+          {data?.error && !isLogin && <p className="error">{data.error}</p>}
           <input type="email" name="email" placeholder="Email" required />
           <input type="password" name="password" placeholder="Mật khẩu" required />
           <button type="submit">Đăng ký</button>
@@ -23,6 +24,7 @@ const AuthForm = () => {
         <Form method="post">
           <h1>Đăng nhập</h1>
           <span>Sử dụng gmail để đăng nhập</span>
+          {data?.error && isLogin && <p className="error">{data.error}</p>}
           <input type="email" name="email" placeholder="Email" required />
           <input type="password" name="password" placeholder="Mật khẩu" required />
           <button type="submit">Đăng nhập</button>

@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./route/Home";
 import AuthForm from "./components/auth/AuthForm";
+import authAction from "./components/auth/authAction";
 
 const router = createBrowserRouter([
   {
@@ -10,6 +11,7 @@ const router = createBrowserRouter([
   {
     path: "/auth",
     element: <AuthForm />,
+    action: authAction, // 👈 Thêm action ở đây
   },
 ]);
 
